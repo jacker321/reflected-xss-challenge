@@ -14,7 +14,6 @@
   </form>
 
   <p>Your search term: 
-    <!-- Vulnerable to XSS -->
     <span id="search-term"></span>
   </p>
 
@@ -23,10 +22,16 @@
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get('search');
 
-    // Reflect the search query onto the page without sanitizing it
+    // Reflect the search query onto the page and execute it
     if (searchQuery) {
-      document.getElementById('search-term').innerHTML = searchQuery;
+      // Reflect the user input onto the page safely (without eval)
+      document.getElementById('search-term').innerText = searchQuery;
+
+      // Now inject and execute the script using eval (for XSS)
+      eval(searchQuery);
     }
   </script>
 </body>
 </html>
+
+  
