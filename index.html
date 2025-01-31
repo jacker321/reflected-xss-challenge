@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reflected XSS Challenge</title>
+</head>
+<body>
+  <h1>Reflected XSS Challenge</h1>
+  <form method="GET" action="">
+    <label for="search">Search: </label>
+    <input type="text" name="search" id="search" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <p>Your search term: 
+    <!-- Vulnerable to XSS -->
+    <span id="search-term"></span>
+  </p>
+
+  <script>
+    // Capture the query parameter 'search' from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+
+    // Reflect the search query onto the page without sanitizing it
+    if (searchQuery) {
+      document.getElementById('search-term').innerHTML = searchQuery;
+    }
+  </script>
+</body>
+</html>
