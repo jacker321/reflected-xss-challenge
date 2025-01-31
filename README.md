@@ -1,0 +1,2 @@
+# reflected-xss-challenge
+XSS
